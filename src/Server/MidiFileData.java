@@ -1,16 +1,12 @@
 package Server;
-
-import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiFileFormat;
 import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequence;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Map;
-
-public class MidiFileData {
+import java.util.List;
+public class MidiFileData implements Serializable {
 
     private String author;
     String title;
@@ -77,6 +73,27 @@ public class MidiFileData {
 
     public int getFileResolution() {
         return fileResolution;
+    }
+
+    public MidiFileData() {
+
+    }
+
+    public  List<String> getMidiFiles() {
+        final File folder = new File("MidiFiles");
+        List<String> filesTitles = new ArrayList<>();
+
+        for(final File file : folder.listFiles()) {
+
+            if(file.isFile()) {
+
+                if(file.getName().matches(".*\\.midi") || file.getName().matches(".*\\.mid")) {
+                    filesTitles.add(file.getName());
+                }
+            }
+        }
+
+        return filesTitles;
     }
 }
 
