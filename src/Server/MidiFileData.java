@@ -29,9 +29,13 @@ public class MidiFileData implements Serializable {
         this.fileResolution = midiFileFormat.getResolution();
     }
 
+    public MidiFileData() {
+
+    }
+
     private void openFile(String file) {
 
-        File f = new File(file);
+        File f = new File("MidiFiles/"+file);
 
         if(f.exists()) {
             this.file = f;
@@ -75,9 +79,7 @@ public class MidiFileData implements Serializable {
         return fileResolution;
     }
 
-    public MidiFileData() {
-
-    }
+ 
 
     public  List<String> getMidiFiles() {
         final File folder = new File("MidiFiles");
