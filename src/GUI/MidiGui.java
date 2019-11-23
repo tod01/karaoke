@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 import java.util.TimeZone;
 
 public class MidiGui extends JFrame {
@@ -28,13 +29,9 @@ public class MidiGui extends JFrame {
 
     public void launcher() throws IOException, InterruptedException, ParseException {
         jFrame = new JFrame("Karaoke");
-        jLabel = new JLabel();
-        jLabel.setVerticalAlignment(JLabel.CENTER);
-        jLabel.setHorizontalAlignment(JLabel.CENTER);
-        jLabel.setText("Music");
-        JPanel jPanel = new JPanel();
-        jPanel.add(jLabel);
-        jFrame.add(jPanel);
+        jFrame.setLayout(new GridLayout());
+        jLabel = new JLabel("Music");
+        jFrame.add(jLabel,BorderLayout.CENTER);
         jFrame.setSize(with, height);
         jFrame.setLocationRelativeTo(null);
         jFrame.setVisible(true);
@@ -44,6 +41,7 @@ public class MidiGui extends JFrame {
         DateFormat dateFormat = new SimpleDateFormat("mm:ss.SS");
         long reference = 0;
         Calendar calendar = Calendar.getInstance();
+
         while((line = bufferedReader.readLine()) != null) {
 
             if(line.startsWith("[")) {
@@ -58,16 +56,26 @@ public class MidiGui extends JFrame {
                 Thread.sleep(result);
                 System.out.println(line + " | " + " " + calendar.get(Calendar.MINUTE) + ":"+ calendar.get(Calendar.SECOND) + ":" + calendar.get(Calendar.MILLISECOND) + " " + milliseconds + " " + result);
                 //label.setText(line);
-                //add(label);
+                //add(label);*
+                jLabel.setVerticalAlignment(SwingConstants.CENTER);
+                jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                jLabel.setForeground(getColor());
                 jLabel.setText(line);
-                // jLabel.setVerticalAlignment(SwingConstants.CENTER);
-                // jLabel.setHorizontalAlignment(SwingConstants.CENTER);
-                // jLabel.setText(line);
             }
         }
 
         bufferedReader.close();
 
+    }
+
+    private Color getColor() {
+        Random random = new Random();
+
+        float red   = random.nextFloat();
+        float green = random.nextFloat();
+        float blue  = random.nextFloat();
+
+        return new Color(red, green, blue);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException, ParseException {
